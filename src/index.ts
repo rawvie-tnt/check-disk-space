@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { access } from "node:fs/promises";
+import { access } from "node:fs";
 import { release } from "node:os";
 import { normalize, sep } from "node:path";
 import { platform } from "node:process";
@@ -23,7 +23,7 @@ function checkDiskSpace(
 	dependencies: Dependencies = {
 		platform,
 		release: release(),
-		fsAccess: access,
+		fsAccess: promisify(access),
 		pathNormalize: normalize,
 		pathSep: sep,
 		cpExecFile: promisify(execFile),
@@ -184,7 +184,7 @@ async function checkZfsPool(
 	dependencies: Dependencies = {
 		platform,
 		release: release(),
-		fsAccess: access,
+		fsAccess: promisify(access),
 		pathNormalize: normalize,
 		pathSep: sep,
 		cpExecFile: promisify(execFile),
